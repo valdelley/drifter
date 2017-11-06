@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = custom_config.get('box_name', 'drifter/jessie64-base')
     box_url = custom_config.get('box_url', 'https://vagrantbox-public.liip.ch/drifter-jessie64-base.json')
     if box_url != ""
-       config.vm.box_url = box_url
+        config.vm.box_url = box_url
     end
 
     config.vm.hostname = custom_config.get('hostname')
@@ -68,6 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.network "forwarded_port", guest: source, host: dest, auto_correct: true
     end
 
+    config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     config.ssh.forward_agent = true
     config.ssh.forward_x11 = true
 
