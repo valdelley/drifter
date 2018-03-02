@@ -3,6 +3,14 @@
   command: apt-get install -y python-apt creates=/usr/share/doc/python-apt/changelog.gz
   become: yes
 
+- name: Create apt-daily.timer.d directory
+  file: path=/etc/systemd/system/apt-daily.timer.d state=directory
+  become: yes
+
+- name: Prevent systemd daily update race condition
+  copy: src=apt-daily.timer.conf dest=/etc/systemd/system/apt-daily.timer.d/apt-daily.timer.conf
+  become: yes
+
 - name: ensure apt database is up-to-date (cache time 1h)
   apt:
     update_cache: yes
